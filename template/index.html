@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:https="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="/static/style.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Flask Chatterbot Example</h1>
+<div>
+<div id="chatbox">
+<p class="botText"><span>Hi! I'm Chatterbot.</span></p>
+</div>
+<div id="userInput">
+<input id="textInput" type="text" name="msg" placeholder="Message">
+<input id="buttonInput" onclick="myFunction()" type="submit" value="Send">
+    <form method="post" style='font-family:cursive,bold'>
+    <button><a href="https://www.startupindia.gov.in/content/sih/en/government-schemes.html">  Apply For Startup  </a></button><br>
+        <button><a href="https://scholarships.gov.in/">  Apply For minority  </a></button><br>
+        <button><a href="https://pensionersportal.gov.in/">  Apply For pantioner  </a></button><br>
+        <button><a href="https://scholarships.gov.in/fresh/newstdRegfrmInstruction"> Apply For Student</a>  </button><br>
+        <br>
+        <br>
+        <br>
+        <button><a href="https://docs.google.com/forms/d/e/1FAIpQLScFtVGRRSVHgII8d0FGicrYBzxgvtc58hkuUnoyHIH-QQs7wA/viewform?vc=0&c=0&w=1">Survey Form </a></button>
+    </form>
+</div>
+<script>
+function getBotResponse() {
+var rawText = $("#textInput").val();
+var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
+$("#textInput").val("");
+$("#chatbox").append(userHtml);
+document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+$.get("/get", { msg: rawText }).done(function(data) {
+var botHtml = '<p class="botText"><span>' + data + '</span></p>';
+$("#chatbox").append(botHtml);
+document.getElementById('userInput').scrollIntoView({block: 'start', behavior: 'smooth'});
+});
+}
+$("#textInput").keypress(function(e) {
+if(e.which == 13) {
+getBotResponse();
+}
+});
+$("#buttonInput").click(function() {
+getBotResponse();
+})
+</script>
+</div>
+</body>
+</html>
