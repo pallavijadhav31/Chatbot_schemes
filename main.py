@@ -3,73 +3,40 @@ from chatterbot import ChatBot
 from chatterbot.trainers import ChatterBotCorpusTrainer
 from flask_ngrok import run_with_ngrok
 from chatterbot.trainers import ListTrainer
-
-# import hyperlink
-app = Flask(__name__, template_folder="template")
+app = Flask(_name_,template_folder="templates")
 run_with_ngrok(app)
-# english_bot = ChatBot("Chatterbot", storage_adapter="chatterbot.storage.SQLStorageAdapter")
-# trainer = ChatterBotCorpusTrainer(english_bot)
-# trainer.train("chatterbot.corpus.english",)
-# trainer.train(["Hi there!","Hello"])
-# trainer.train(["Greetings!","Hello",])
+english_bot = ChatBot("Chatterbot", storage_adapter="chatterbot.storage.SQLStorageAdapter")
+trainer = ChatterBotCorpusTrainer(english_bot)
+trainer.train("chatterbot.corpus.english",)
+#trainer.train(["Hi there!","Hello"])
+#trainer.train(["Greetings!","Hello",])
 chatbot = ChatBot('Udaan')
 trainer = ListTrainer(chatbot)
-conversation = [
-    "Hello",
-    "Hi there!",
-    "How are you doing?",
-    "I'm doing great.",
-    "That is good to hear",
-    "Thank you.",
-    "You're welcome."
-    "Scheme",
-    "Tell me your gender",
-    "Male",
-    "Age",
-    "10",
-    "Income group",
-    "BPL",
-    "Student or Non Student",
-    "Non Student"
-]
-conversation1 = [
-    "Hi",
-    "Hi there!",
-    "How are you doing?",
-    "I'm doing great.",
-    "That is good to hear",
-    "Thank you.",
-    "You're welcome."
-    "Scheme",
-    "Tell me your gender",
-    "Female",
-    "Age",
-    "50",
-    "Income group",
-    "BPL",
-    "Student or Non Student",
-    "Non Student"
-]
-trainer.train(conversation)
-trainer.train(conversation1)
-
-
-# trainer.train(["Hi there!","Hello"])
-# trainer.train(["Greetings!","Hello"])
+#trainer.train(["Hi there!","Hello"])
+#trainer.train(["Greetings!","Hello"])
 @app.route("/")
 def home():
     return render_template("index.html")
-
-
+ 
 @app.route("/get")
 def get_bot_response():
     userText = request.args.get('msg')
-    if userText == "Policy" or "Scheme":
-        return "Which Scheme you are interested in?" + "\n" + "Women/BPL/Student?/Pensioner"
-    if userText == 'Bye':
-        return "Ok bye!!"
+    if userText=="Hi" or userText=="Hello":
+      return "How may I help you?"
+    if userText=="Schemes" or userText=="Policy":
+      return "Which Kind of Scheme you are interested in?"
+    if userText=="Pensioners":
+      return "Integrated Programme for Older Persons (IPOP),Rashtriya Vayoshri Yojana (RVY),Indira Gandhi National Old Age Pension Scheme (IGNOAPS),The Pradhan Mantri Vaya Vandana Yojana"
+    if userText=="Female" or userText=="Women":
+      return "Mahila E-haat ,Beti Bachao, Beti Padhao,One Stop Centre Scheme,Working Women Hostels"
+    if userText=="Minority":
+      return "Schemes"
+    if userText=="BPL":
+      return "Pradhan Mantri Jan Dhan Yojna (PMJDY),Sukanya Samriddhi Yojna (SSY),Rashtriya Swasthya Bima Yojana (RSBY),National Social Assistance scheme,Pradhan Mantri Mudra Yojana."
+    if userText=='Bye':
+      return "Ok bye!!"
     return str(chatbot.get_response(userText))
-
-
-if __name__ == "__main__":
+ 
+ 
+if _name_ == "_main_":
     app.run()
